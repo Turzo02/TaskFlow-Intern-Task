@@ -9,6 +9,7 @@ import {
   Package,
   LogOut,
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,6 +25,7 @@ const DashboardLayout = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userEmail");
+    toast.success("Logged out successfully!");
     navigate("/");
   };
 

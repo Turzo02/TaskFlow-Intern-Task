@@ -1,61 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router";
-import LoginPage from "./Pages/LoginPage";
-import DashboardLayout from "./Layout/DashboardLayout";
-import Overview from "./Components/Overview";
-import Users from "./Components/Users";
-import Analytics from "./Components/Analytics";
-import Products from "./Components/Products";
-import UserPage from "./Components/UserPage";
-import ProductPage from "./Components/ProductPage";
-import ProtectedRoute from "./Routes/ProtectedRoute";
-import PublicRoute from "./Routes/PublicRoute";
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <PublicRoute>
-        <LoginPage />
-      </PublicRoute>
-    ),
-  },
-  {
-    path: "/dashboard",
-    element: (
-      <ProtectedRoute>
-        <DashboardLayout />
-      </ProtectedRoute>
-    ),
-    children: [
-      { index: true, element: <Overview /> },
-      {
-        path: "users",
-        element: <Users />,
-      },
-      {
-        path: "users/:id",
-        element: <UserPage />,
-      },
-      {
-        path: "analytics",
-        element: <Analytics />,
-      },
-      {
-        path: "products",
-        element: <Products />,
-      },
-      {
-        path: "products/:id",
-        element: <ProductPage />,
-      },
-    ],
-  },
-]);
+import App from "./App";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </StrictMode>,
 );

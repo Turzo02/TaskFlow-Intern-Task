@@ -45,7 +45,6 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f4f7f6] px-4 font-sans">
-      <Toaster position="top-center" reverseOrder={false} />
       <div className="w-full max-w-md bg-white shadow-2xl rounded-3xl p-10 border border-gray-100">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-extrabold text-[#1B4332] mb-2">
