@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router";
+import { UserPlus, Search, AlertCircle, ChevronRight } from "lucide-react";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -7,101 +8,45 @@ const Users = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('https://task-api-eight-flax.vercel.app/api/users');
-        const data = await response.json();
-        setUsers(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
+    fetch("https://task-api-eight-flax.vercel.app/api/users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <div className="p-6">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-          <div className="space-y-3">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="h-12 bg-gray-200 rounded"></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4">Users</h1>
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-          Error: {error}
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <LoadingSkeleton />;
+  if (error) return <ErrorState message={error} />;
 
   return (
-    <div className="p-6">
-      <h1 className="text-4xl font-black bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent mb-8 tracking-tight">Users</h1>
-      
-      <div className="backdrop-blur-xl bg-white/80 rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-5xl font-display font-black tracking-tighter">
+            Directory<span className="text-primary-accent">.</span>
+          </h1>
+          <p className="text-gray-400 font-medium mt-1">Manage and audit system personnel</p>
+        </div>
+        <button className="bg-action-gradient text-white px-6 py-3 rounded-control font-display font-black text-xs uppercase tracking-widest shadow-lg shadow-primary-dark/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+          <UserPlus size={18} /> Add User
+        </button>
+      </header>
+
+      <div className="panel-card overflow-hidden border-none shadow-2xl shadow-primary-dark/5">
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-emerald-50/80 backdrop-blur-sm border-b border-emerald-100/50">
-              <tr>
-                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
-                  Join Date
-                </th>
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-surface-base">
+                {["Personnel", "Contact", "Status", "Joined", ""].map((h) => (
+                  <th key={h} className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
-            <tbody className="bg-white/50 divide-y divide-emerald-100/30">
+            <tbody className="divide-y divide-surface-base">
               {users.map((user) => (
-                <tr key={user.id} className="hover:bg-emerald-50/50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <Link
-                      to={`/dashboard/users/${user.id}`}
-                      className="text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline transition-colors"
-                    >
-                      {user.name}
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-700">
-                      {user.email}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-4 py-2 inline-flex text-sm text-start uppercase font-black rounded-full ${
-                        user.status === 'active'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {user.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700">
-                    {new Date(user.joinDate).toLocaleDateString()}
-                  </td>
-                </tr>
+                <UserRow key={user.id} user={user} />
               ))}
             </tbody>
           </table>
@@ -110,5 +55,52 @@ const Users = () => {
     </div>
   );
 };
+
+/* --- Sub-components --- */
+
+const UserRow = ({ user }) => (
+  <tr className="group hover:bg-primary-soft/30 transition-colors">
+    <td className="px-8 py-5">
+      <Link to={`/dashboard/users/${user.id}`} className="flex items-center gap-3 group/link">
+        <div className="w-10 h-10 rounded-full bg-primary-dark text-white flex items-center justify-center font-display font-bold text-sm">
+          {user.name.charAt(0)}
+        </div>
+        <span className="font-display font-bold text-content-main group-hover/link:text-primary-accent transition-colors">
+          {user.name}
+        </span>
+      </Link>
+    </td>
+    <td className="px-8 py-5 text-sm font-medium text-gray-500">{user.email}</td>
+    <td className="px-8 py-5">
+      <span className={`
+        px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider
+        ${user.status === "active" ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"}
+      `}>
+        {user.status}
+      </span>
+    </td>
+    <td className="px-8 py-5 text-sm font-bold text-gray-400">
+      {new Date(user.joinDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+    </td>
+    <td className="px-8 py-5 text-right">
+      <ChevronRight className="inline-block text-gray-300 group-hover:text-primary-dark group-hover:translate-x-1 transition-all" size={20} />
+    </td>
+  </tr>
+);
+
+const LoadingSkeleton = () => (
+  <div className="space-y-8 animate-pulse">
+    <div className="h-12 bg-gray-200 rounded-control w-64" />
+    <div className="panel-card h-96 bg-white/50" />
+  </div>
+);
+
+const ErrorState = ({ message }) => (
+  <div className="panel-card p-12 text-center max-w-lg mx-auto border-red-100">
+    <AlertCircle className="mx-auto text-red-500 mb-4" size={48} />
+    <h2 className="text-xl font-display font-bold">Access Interrupted</h2>
+    <p className="text-sm text-gray-400 mt-2">{message}</p>
+  </div>
+);
 
 export default Users;

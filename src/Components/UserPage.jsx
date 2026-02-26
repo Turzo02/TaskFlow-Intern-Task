@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { User, Mail, Calendar, ArrowLeft, CheckCircle, XCircle } from 'lucide-react';
+import { User as UserIcon, Mail, Calendar, ArrowLeft, ShieldCheck, AlertCircle } from 'lucide-react';
 
 const UserPage = () => {
   const { id } = useParams();
@@ -10,164 +10,114 @@ const UserPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`https://task-api-eight-flax.vercel.app/api/users/${id}`);
-        if (!response.ok) {
-          throw new Error('User not found');
-        }
-        const data = await response.json();
-        setUser(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchUser();
-    }
+    if (!id) return;
+    fetch(`https://task-api-eight-flax.vercel.app/api/users/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Personnel record not found');
+        return res.json();
+      })
+      .then(data => setUser(data))
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) {
-    return (
-      <div className="p-6">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-          <div className="max-w-2xl mx-auto">
-            <div className="h-32 bg-gray-200 rounded-lg mb-6"></div>
-            <div className="space-y-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-16 bg-gray-200 rounded-lg"></div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-6">
-        <button
-          onClick={() => navigate('/dashboard/users')}
-          className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Users</span>
-        </button>
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-            Error: {error}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="p-6">
-        <button
-          onClick={() => navigate('/dashboard/users')}
-          className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Users</span>
-        </button>
-        <div className="max-w-2xl mx-auto text-center text-gray-500">
-          User not found
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <LoadingSkeleton />;
+  
+  if (error || !user) return (
+    <div className="p-10 flex flex-col items-center justify-center min-h-[60vh] text-center">
+      <AlertCircle size={48} className="text-red-500 mb-4" />
+      <h2 className="text-2xl font-display font-black tracking-tight">{error || "User Missing"}</h2>
+      <button onClick={() => navigate('/dashboard/users')} className="mt-6 flex items-center gap-2 text-primary-dark font-black uppercase text-xs tracking-widest hover:underline">
+        <ArrowLeft size={16} /> Return to Directory
+      </button>
+    </div>
+  );
 
   return (
-    <div className="p-6">
-      {/* Back Button */}
-      <button
-        onClick={() => navigate('/dashboard/users')}
-        className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span>Back to Users</span>
-      </button>
+    <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
+      {/* Editorial Header */}
+      <header className="flex items-center justify-between">
+        <button 
+          onClick={() => navigate('/dashboard/users')}
+          className="group flex items-center gap-2 text-gray-400 hover:text-primary-dark transition-colors font-black uppercase text-[10px] tracking-[0.2em]"
+        >
+          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+          Back to Directory
+        </button>
+      </header>
 
-      <div className="max-w-2xl mx-auto">
-        {/* User Card */}
-        <div className="backdrop-blur-xl bg-white/80 rounded-3xl shadow-2xl overflow-hidden border border-white/20">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-emerald-600 to-teal-500 p-6">
-            <div className="flex items-center space-x-4">
-              <div className="w-20 h-20 bg-white/90 backdrop-blur-sm rounded-3xl flex items-center justify-center">
-                <User className="w-10 h-10 text-emerald-600" />
-              </div>
-              <div className="text-white">
-                <h1 className="text-2xl font-black">{user.name}</h1>
-                <p className="text-emerald-100 font-medium">User ID: #{user.id}</p>
-              </div>
-            </div>
+      <div className="panel-card overflow-hidden border-none shadow-2xl shadow-primary-dark/5">
+        {/* Profile Identity Header */}
+        <div className="bg-action-gradient p-10 md:p-12 text-white flex flex-col md:flex-row items-center gap-8">
+          <div className="w-24 h-24 bg-white/10 backdrop-blur-md rounded-panel flex items-center justify-center border border-white/20 shadow-inner">
+            <UserIcon size={40} className="text-white" />
           </div>
-
-          {/* User Details */}
-          <div className="p-6">
-            <div className="space-y-6">
-              {/* Email */}
-              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
-                <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-2xl">
-                  <Mail className="w-5 h-5 text-blue-700" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-bold text-gray-700">Email Address</p>
-                  <p className="text-lg font-black text-gray-900">{user.email}</p>
-                </div>
-              </div>
-
-              {/* Status */}
-              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
-                <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 p-3 rounded-2xl">
-                  <CheckCircle className="w-5 h-5 text-emerald-700" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-bold text-gray-700">Account Status</p>
-                  <div className="flex items-center space-x-2">
-                    <span
-                      className={`px-3 py-1 inline-flex text-sm font-black rounded-full ${
-                        user.status === 'active'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {user.status}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Join Date */}
-              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
-                <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-2xl">
-                  <Calendar className="w-5 h-5 text-purple-700" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-bold text-gray-700">Member Since</p>
-                  <p className="text-lg font-black text-gray-900">
-                    {new Date(user.joinDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="text-center md:text-left">
+            <h1 className="text-5xl font-display font-black tracking-tighter leading-none mb-2">
+              {user.name}
+            </h1>
+            <p className="text-primary-soft/60 font-black uppercase text-xs tracking-[0.3em]">
+              ID Registry: #{user.id.toString().padStart(4, '0')}
+            </p>
           </div>
+        </div>
+
+        {/* Technical Specifications */}
+        <div className="p-8 md:p-12 bg-white space-y-4">
+          <InfoRow 
+            icon={Mail} 
+            label="Digital Address" 
+            value={user.email} 
+            iconBg="bg-blue-50 text-blue-600" 
+          />
+          <InfoRow 
+            icon={ShieldCheck} 
+            label="Verification Status" 
+            value={user.status} 
+            isStatus 
+            iconBg="bg-emerald-50 text-emerald-600" 
+          />
+          <InfoRow 
+            icon={Calendar} 
+            label="Date of Enrollment" 
+            value={new Date(user.joinDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} 
+            iconBg="bg-purple-50 text-purple-600" 
+          />
         </div>
       </div>
     </div>
   );
 };
+
+/* --- Refined Sub-components --- */
+
+const InfoRow = ({ icon: Icon, label, value, iconBg, isStatus }) => (
+  <div className="flex items-center justify-between p-6 rounded-control bg-surface-base/50 border border-transparent hover:border-white hover:bg-white hover:shadow-xl hover:shadow-primary-dark/5 transition-all group">
+    <div className="flex items-center gap-5">
+      <div className={`p-3 rounded-inner ${iconBg} transition-transform group-hover:scale-110`}>
+        <Icon size={20} />
+      </div>
+      <div>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-0.5">{label}</p>
+        {isStatus ? (
+          <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
+            value === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+          }`}>
+            {value}
+          </span>
+        ) : (
+          <p className="text-lg font-display font-bold text-content-main">{value}</p>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+const LoadingSkeleton = () => (
+  <div className="max-w-3xl mx-auto space-y-8 animate-pulse">
+    <div className="h-4 bg-gray-200 w-32 rounded" />
+    <div className="panel-card h-[400px] bg-white/50" />
+  </div>
+);
 
 export default UserPage;

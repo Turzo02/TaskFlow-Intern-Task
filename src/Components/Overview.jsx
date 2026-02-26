@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Users, CheckCircle, DollarSign, TrendingUp } from "lucide-react";
+import { Users, CheckCircle, DollarSign, TrendingUp, AlertCircle } from "lucide-react";
 
 const Overview = () => {
   const [data, setData] = useState(null);
@@ -7,123 +7,71 @@ const Overview = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://task-api-eight-flax.vercel.app/api/overview",
-        );
-        const data = await response.json();
-        setData(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetch("https://task-api-eight-flax.vercel.app/api/overview")
+      .then((res) => res.json())
+      .then((d) => setData(d))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <div className="p-6">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-white p-6 rounded-lg shadow">
-                <div className="h-8 bg-gray-200 rounded w-1/2 mb-2"></div>
-                <div className="h-8 bg-gray-200 rounded w-3/4"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <LoadingSkeleton />;
+  if (error) return <ErrorState message={error} />;
 
-  if (error) {
-    // error message
-    return (
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4">Overview</h1>
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-          Error: {error}
-        </div>
-      </div>
-    );
-  }
+  const stats = [
+    { label: "Total Users", val: data.totalUsers.toLocaleString(), icon: Users, color: "bg-blue-50 text-blue-600" },
+    { label: "Active Users", val: data.activeUsers.toLocaleString(), icon: CheckCircle, color: "bg-emerald-50 text-emerald-600" },
+    { label: "Revenue", val: `$${data.revenue.toLocaleString()}`, icon: DollarSign, color: "bg-amber-50 text-amber-600" },
+    { label: "Growth", val: `${data.growth}%`, icon: TrendingUp, color: "bg-purple-50 text-purple-600" },
+  ];
 
-return(
-  <div className="p-6">
-  <h1 className="text-4xl font-extrabold bg-linear-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent mb-8 tracking-tight font-poppins">
-    Overview
-  </h1>
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <header>
+        <h1 className="text-5xl font-display font-black tracking-tighter">
+          Overview<span className="text-primary-accent">.</span>
+        </h1>
+        <p className="text-gray-400 font-medium mt-1">Real-time system performance metrics</p>
+      </header>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {/* Total Users Card */}
-    <div className="backdrop-blur-xl bg-white/70 p-6 rounded-3xl shadow-xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.05]">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-semibold text-gray-700 font-poppins">Total Users</p>
-          <p className="text-3xl font-extrabold text-gray-900 mt-2 font-poppins">
-            {data.totalUsers.toLocaleString()}
-          </p>
-        </div>
-        <div className="bg-linear-to-br from-blue-100 to-blue-200 p-4 rounded-2xl">
-          <Users className="w-8 h-8 text-blue-700" />
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {stats.map((stat, i) => (
+          <StatCard key={i} {...stat} />
+        ))}
       </div>
     </div>
+  );
+};
 
-    {/* Active Users Card */}
-    <div className="backdrop-blur-xl bg-white/70 p-6 rounded-3xl shadow-xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.05]">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-semibold text-gray-700 font-poppins">Active Users</p>
-          <p className="text-3xl font-extrabold text-gray-900 mt-2 font-poppins">
-            {data.activeUsers.toLocaleString()}
-          </p>
-        </div>
-        <div className="bg-linear-to-br from-emerald-100 to-emerald-200 p-4 rounded-2xl">
-          <CheckCircle className="w-8 h-8 text-emerald-700" />
-        </div>
-      </div>
+/* Sub-components for cleaner logic */
+const StatCard = ({ label, val, icon: Icon, color }) => (
+  <div className="panel-card p-8 flex items-center justify-between group hover:scale-[1.02] transition-all cursor-default">
+    <div className="space-y-1">
+      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{label}</p>
+      <p className="text-4xl font-display font-black text-content-main tracking-tight">{val}</p>
     </div>
-
-    {/* Revenue Card */}
-    <div className="backdrop-blur-xl bg-white/70 p-6 rounded-3xl shadow-xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.05]">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-semibold text-gray-700 font-poppins">Revenue</p>
-          <p className="text-3xl font-extrabold text-gray-900 mt-2 font-poppins">
-            ${data.revenue.toLocaleString()}
-          </p>
-        </div>
-        <div className="bg-linear-to-br from-yellow-100 to-yellow-200 p-4 rounded-2xl">
-          <DollarSign className="w-8 h-8 text-yellow-700" />
-        </div>
-      </div>
-    </div>
-
-    {/* Growth Card */}
-    <div className="backdrop-blur-xl bg-white/70 p-6 rounded-3xl shadow-xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.05]">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-semibold text-gray-700 font-poppins">Growth</p>
-          <p className="text-3xl font-extrabold text-gray-900 mt-2 font-poppins">
-            {data.growth}%
-          </p>
-        </div>
-        <div className="bg-linear-to-br from-purple-100 to-purple-200 p-4 rounded-2xl">
-          <TrendingUp className="w-8 h-8 text-purple-700" />
-        </div>
-      </div>
+    <div className={`p-4 rounded-control ${color} group-hover:rotate-6 transition-transform duration-300`}>
+      <Icon size={28} />
     </div>
   </div>
-</div>
+);
 
-)
-};
+const LoadingSkeleton = () => (
+  <div className="space-y-8 animate-pulse">
+    <div className="h-12 bg-gray-200 rounded-control w-48" />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className="h-32 bg-white rounded-panel border border-white" />
+      ))}
+    </div>
+  </div>
+);
+
+const ErrorState = ({ message }) => (
+  <div className="panel-card p-12 text-center border-red-100 max-w-lg mx-auto">
+    <AlertCircle className="mx-auto text-red-500 mb-4" size={48} />
+    <h2 className="text-xl font-display font-bold text-red-900">Sync Failed</h2>
+    <p className="text-sm text-red-600/60 mt-2 font-medium">{message}</p>
+  </div>
+);
 
 export default Overview;

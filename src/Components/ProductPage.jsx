@@ -1,17 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
-import {
-  Box,
-  Tag,
-  TrendingUp,
-  DollarSign,
-  ShoppingCart,
-  ArrowLeft,
-  ArrowUpRight,
-  LayoutDashboard,
-  MoreVertical,
-  Activity
-} from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router';
+import { ArrowLeft, Package, Activity, Fingerprint } from 'lucide-react';
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -21,180 +10,100 @@ const ProductPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`https://task-api-eight-flax.vercel.app/api/products/${id}`);
-        if (!response.ok) throw new Error("Product not found");
-        const data = await response.json();
-        setProduct(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (id) fetchProduct();
+    if (!id) return;
+    fetch(`https://task-api-eight-flax.vercel.app/api/products/${id}`)
+      .then(res => res.ok ? res.json() : Promise.reject('Registry Error'))
+      .then(setProduct)
+      .catch(err => setError(err))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <LoadingScreen />;
-  if (error || !product) return <ErrorScreen error={error} navigate={navigate} />;
-
-  const revenue = product.price * product.sales;
+  if (loading) return <div className="p-20 animate-pulse font-display font-black opacity-20 text-4xl">LOADING...</div>;
+  if (error || !product) return <div className="p-20 font-display font-black text-red-500">ENTRY NOT FOUND</div>;
 
   return (
-    <div className="min-h-screen p-4 md:p-8 lg:p-12">
-      <div className="max-w-7xl mx-auto">
+    <div className="max-w-4xl mx-auto py-12 px-6">
+      {/* Navigation */}
+      <button 
+        onClick={() => navigate('/dashboard/products')}
+        className="mb-12 flex items-center gap-2 font-black text-[10px] uppercase tracking-[0.3em] text-primary-accent hover:opacity-60 transition-opacity"
+      >
+        <ArrowLeft size={14} /> Close Registry
+      </button>
+
+      <div className="flex flex-col md:flex-row gap-12 items-stretch">
         
-        {/* Header Section */}
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-gray-500 text-xs font-bold uppercase tracking-widest">
-              <LayoutDashboard size={14} />
-              <span>Dashboard</span>
-              <span className="text-gray-300">/</span>
-              <span className="text-brand-forest">Overview</span>
+        {/* Identity Block - Only Name and ID */}
+        <div className="md:w-1/2 bg-action-gradient rounded-panel p-10 text-white flex flex-col justify-between shadow-2xl shadow-primary-dark/20">
+          <div className="space-y-6">
+            <div className="w-16 h-16 glass-effect rounded-control flex items-center justify-center">
+              <Package size={32} />
             </div>
-            <h1 className="text-4xl font-display font-extrabold text-text-main">Analytics</h1>
+            <h1 className="text-6xl font-display font-black tracking-tighter leading-none">
+              {product.name}
+            </h1>
           </div>
           
-          <div className="flex gap-3 w-full md:w-auto">
-            <button 
-              onClick={() => navigate("/dashboard/products")}
-              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-inner font-bold text-sm hover:bg-gray-50 transition-all shadow-sm"
-            >
-              <ArrowLeft size={16} /> Back
-            </button>
-            <button className="flex-1 md:flex-none px-6 py-3 bg-brand-forest text-white rounded-inner font-bold text-sm shadow-lg shadow-brand-forest/20 hover:bg-brand-emerald transition-all">
-              Export Report
-            </button>
-          </div>
-        </header>
-
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          
-          {/* Main Info Box */}
-          <div className="bento-card md:col-span-12 lg:col-span-8 p-8 md:p-10 flex flex-col md:flex-row gap-10">
-            <div className="w-28 h-28 md:w-36 md:h-36 bg-brand-mint rounded-[28px] flex items-center justify-center flex-shrink-0">
-              <Box size={56} className="text-brand-forest" />
-            </div>
-            <div className="flex-1">
-              <div className="flex justify-between items-start">
-                <span className="px-3 py-1 bg-emerald-50 text-brand-forest text-[10px] font-black rounded-lg uppercase tracking-wider mb-4 inline-block">
-                  Ref: {product.id}
-                </span>
-                <MoreVertical className="text-gray-300 cursor-pointer" />
-              </div>
-              <h2 className="text-4xl md:text-5xl font-display font-black leading-tight mb-4 tracking-tight">
-                {product.name}
-              </h2>
-              <div className="flex flex-wrap gap-4 text-sm font-bold text-gray-400">
-                <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full">
-                  <Tag size={16} /> {product.category}
-                </div>
-                <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full">
-                  <Activity size={16} className="text-emerald-500" /> Live Status
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Revenue Card (Emerald Gradient) */}
-          <div className="md:col-span-6 lg:col-span-4 bg-donezo-gradient rounded-donezo p-10 text-white shadow-xl shadow-brand-forest/20 flex flex-col justify-between group overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-8">
-                <div className="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
-                  <TrendingUp size={24} />
-                </div>
-                <ArrowUpRight size={24} className="opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-              </div>
-              <p className="text-emerald-100/60 font-bold text-xs uppercase tracking-widest mb-1">Gross Revenue</p>
-              <h3 className="text-5xl font-display font-black tracking-tighter">
-                ${revenue.toLocaleString()}
-              </h3>
-            </div>
-            <div className="mt-8 bg-white/10 py-2 px-4 rounded-xl border border-white/10 inline-block text-xs font-bold w-fit relative z-10">
-              +14.2% Growth
-            </div>
-          </div>
-
-          {/* Pricing Stats */}
-          <div className="bento-card md:col-span-6 lg:col-span-4 p-8 flex flex-col justify-between">
-            <div className="flex items-center gap-4 mb-10">
-              <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl">
-                <DollarSign size={24} />
-              </div>
-              <span className="font-bold text-gray-500 uppercase text-xs tracking-widest">Pricing</span>
-            </div>
+          <div className="pt-10 flex items-center gap-4 border-t border-white/10">
+            <Fingerprint size={24} className="opacity-40" />
             <div>
-              <p className="text-4xl font-display font-black text-text-main tracking-tighter">
-                ${product.price.toFixed(2)}
-              </p>
-              <p className="text-xs font-bold text-gray-400 mt-2">Global MSRP Standard</p>
+              <p className="text-[10px] font-black uppercase tracking-widest opacity-50">Unique Identifier</p>
+              <p className="font-display font-bold tracking-tight">PID-00{product.id}</p>
             </div>
           </div>
-
-          {/* Sales Volume Stats */}
-          <div className="bento-card md:col-span-6 lg:col-span-4 p-8 flex flex-col justify-between">
-            <div className="flex items-center gap-4 mb-10">
-              <div className="p-3 bg-orange-50 text-orange-600 rounded-2xl">
-                <ShoppingCart size={24} />
-              </div>
-              <span className="font-bold text-gray-500 uppercase text-xs tracking-widest">Distribution</span>
-            </div>
-            <div>
-              <p className="text-4xl font-display font-black text-text-main tracking-tighter">
-                {product.sales.toLocaleString()}
-              </p>
-              <p className="text-xs font-bold text-gray-400 mt-2">Units Shipped Total</p>
-            </div>
-          </div>
-
-          {/* Performance Bar */}
-          <div className="bento-card md:col-span-6 lg:col-span-4 p-8">
-            <div className="flex justify-between items-center mb-10">
-              <span className="font-bold text-gray-700">Market Reach</span>
-              <span className="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Optimal</span>
-            </div>
-            <div className="space-y-4">
-              <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-brand-forest w-[75%] rounded-full transition-all duration-1000" />
-              </div>
-              <div className="flex justify-between text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                <span>Current Velocity</span>
-                <span>75%</span>
-              </div>
-            </div>
-          </div>
-
         </div>
+
+        {/* Technical Data Sheet - Only Price, Sales, Category */}
+        <div className="md:w-1/2 flex flex-col justify-center space-y-1">
+          <header className="mb-6 px-4">
+            <div className="flex items-center gap-2 text-emerald-600 mb-1">
+              <Activity size={14} />
+              <span className="text-[10px] font-black uppercase tracking-widest">Active Entry</span>
+            </div>
+            <h2 className="text-2xl font-display font-black uppercase tracking-tight">Technical Specs</h2>
+          </header>
+
+          <SpecItem 
+            label="Valuation" 
+            value={`$${product.price.toFixed(2)}`} 
+            detail="Current market list price per unit."
+          />
+          <SpecItem 
+            label="Market Volume" 
+            value={product.sales.toLocaleString()} 
+            detail="Total units successfully distributed."
+          />
+          <SpecItem 
+            label="Classification" 
+            value={product.category} 
+            detail="System categorized asset type."
+            isCaps
+          />
+
+          <footer className="mt-8 px-4 pt-6 border-t border-gray-200">
+            <p className="text-[9px] text-gray-400 font-medium leading-relaxed">
+              This data is fetched directly from the secure registry. Any modifications to unit valuation or classification must be authorized by system admins.
+            </p>
+          </footer>
+        </div>
+
       </div>
     </div>
   );
 };
 
-const LoadingScreen = () => (
-  <div className="min-h-screen flex flex-col items-center justify-center p-12">
-    <div className="w-16 h-16 border-4 border-brand-mint border-t-brand-forest rounded-full animate-spin mb-6" />
-    <span className="font-display font-black text-brand-forest uppercase tracking-widest text-xs">Synchronizing Data</span>
-  </div>
-);
-
-const ErrorScreen = ({ error, navigate }) => (
-  <div className="min-h-screen flex items-center justify-center p-8">
-    <div className="bento-card p-12 max-w-sm text-center">
-      <div className="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
-        <Box size={32} />
-      </div>
-      <h2 className="text-2xl font-display font-black mb-2">Request Failed</h2>
-      <p className="text-sm text-gray-400 mb-8 leading-relaxed">{error || "The specified product registry could not be located."}</p>
-      <button 
-        onClick={() => navigate("/dashboard/products")}
-        className="w-full py-4 bg-text-main text-white rounded-inner font-bold text-sm uppercase tracking-widest shadow-xl"
-      >
-        Back to Dashboard
-      </button>
+/* Internal UI Component for Minimalist Data Presentation */
+const SpecItem = ({ label, value, detail, isCaps }) => (
+  <div className="group p-4 rounded-control hover:bg-white hover:shadow-xl hover:shadow-primary-dark/5 transition-all border border-transparent">
+    <div className="flex justify-between items-baseline mb-1">
+      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{label}</span>
+      <span className={`text-2xl font-display font-black text-primary-dark tracking-tighter ${isCaps ? 'uppercase' : ''}`}>
+        {value}
+      </span>
     </div>
+    <p className="text-[10px] text-gray-400 font-medium italic opacity-0 group-hover:opacity-100 transition-opacity">
+      {detail}
+    </p>
   </div>
 );
 
