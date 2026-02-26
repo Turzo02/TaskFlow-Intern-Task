@@ -11,14 +11,24 @@ import Analytics from "./Components/Analytics";
 import Products from "./Components/Products";
 import UserPage from "./Components/UserPage";
 import ProductPage from "./Components/ProductPage";
+import ProtectedRoute from "./Routes/ProtectedRoute";
+import PublicRoute from "./Routes/PublicRoute";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginPage />,
+    element: (
+      <PublicRoute>
+        <LoginPage />
+      </PublicRoute>
+    ),
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <Overview /> },
       {

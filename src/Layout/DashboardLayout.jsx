@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router';
-import { Menu, X, LayoutDashboard, Users, BarChart3, Package } from 'lucide-react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router';
+import { Menu, X, LayoutDashboard, Users, BarChart3, Package, LogOut } from 'lucide-react';
+import { Toaster } from 'react-hot-toast';
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -12,9 +13,16 @@ const DashboardLayout = () => {
     { to: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
     { to: "/dashboard/products", label: "Products", icon: Package },
   ];
+  const navigate = useNavigate();
+  const handleLogout = () => {
+  localStorage.removeItem("token"); 
+  localStorage.removeItem("userEmail"); 
+  navigate("/"); 
+}
 
   return (
     <div className="max-w-7xl mx-auto flex min-h-screen bg-gray-50">
+      <Toaster position="top-center" reverseOrder={false} />
       {/* Sidebar */}
       <aside
         className={`${
@@ -54,6 +62,17 @@ const DashboardLayout = () => {
               })}
             </ul>
           </nav>
+          
+          {/* Logout Button */}
+          <div className="absolute bottom-6 left-6 right-6">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 hover:text-red-700 font-medium group"
+            >
+              <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </aside>
 
