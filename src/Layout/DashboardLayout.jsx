@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router';
-import { Menu, X, LayoutDashboard, Users, BarChart3, Package, LogOut } from 'lucide-react';
-import { Toaster } from 'react-hot-toast';
+import React, { useState } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router";
+import {
+  Menu,
+  X,
+  LayoutDashboard,
+  Users,
+  BarChart3,
+  Package,
+  LogOut,
+} from "lucide-react";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,14 +22,13 @@ const DashboardLayout = () => {
   ];
   const navigate = useNavigate();
   const handleLogout = () => {
-  localStorage.removeItem("token"); 
-  localStorage.removeItem("userEmail"); 
-  navigate("/"); 
-}
+    localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
+    navigate("/");
+  };
 
   return (
     <div className="max-w-7xl mx-auto flex min-h-screen bg-gray-50">
-      <Toaster position="top-center" reverseOrder={false} />
       {/* Sidebar */}
       <aside
         className={`${
@@ -50,8 +56,8 @@ const DashboardLayout = () => {
                       onClick={() => setSidebarOpen(false)}
                       className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                         location.pathname === item.to
-                          ? 'bg-blue-600 text-white shadow-md'
-                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                          ? "bg-blue-600 text-white shadow-md"
+                          : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -62,7 +68,7 @@ const DashboardLayout = () => {
               })}
             </ul>
           </nav>
-          
+
           {/* Logout Button */}
           <div className="absolute bottom-6 left-6 right-6">
             <button
@@ -87,7 +93,7 @@ const DashboardLayout = () => {
             <Menu className="w-5 h-5" />
           </button>
         </div>
-        
+
         <div className="p-6">
           <Outlet />
         </div>
