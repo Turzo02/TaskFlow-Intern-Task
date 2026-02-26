@@ -3,122 +3,89 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { ShieldCheck, Mail, Lock, ArrowRight } from "lucide-react";
 
 const LoginPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
-  } = useForm({
-    defaultValues: {
-      email: "user1@example.com",
-      password: "password123",
-    },
-  });
   const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm({
+    defaultValues: { email: "user1@example.com", password: "password123" },
+  });
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        "https://task-api-eight-flax.vercel.app/api/login",
-        {
-          email: data.email,
-          password: data.password,
-        },
-      );
-
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userEmail", response.data.email);
-        toast.success("Welcome back! Login successful."); 
+      const { data: res } = await axios.post("https://task-api-eight-flax.vercel.app/api/login", data);
+      
+      if (res.token) {
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("userEmail", res.email);
+        toast.success("Identity Verified. Welcome.");
         navigate("/dashboard");
       }
-    } catch (error) {
-      // Error handling
-      setError("root", {
-        message:
-          error.response?.data?.message || "Invalid credentials. Try again!",
-      });
+    } catch (err) {
+      setError("root", { message: err.response?.data?.message || "Access Denied. Check credentials." });
     }
   };
 
+  const inputClass = (error) => `
+    w-full bg-primary-soft/30 border-2 px-4 py-4 rounded-control outline-none transition-all font-bold text-sm
+    ${error ? "border-red-400 focus:border-red-500" : "border-transparent focus:border-primary-dark/20 focus:bg-white"}
+  `;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-emerald-50 via-white to-teal-50 px-4 font-sans relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-br from-emerald-200/30 to-teal-200/30 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-linear-to-tr from-green-200/30 to-emerald-200/30 rounded-full blur-3xl"></div>
-      </div>
+    <div className="min-h-screen bg-surface-base flex items-center justify-center p-6 relative overflow-hidden">
+      <Toaster />
       
-      <div className="w-full max-w-md backdrop-blur-xl bg-white/80 shadow-lg rounded-3xl p-10 border border-white/20 relative z-10">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-black bg-linear-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent mb-3 tracking-tight">
-            TaskFlow Dashboard
-          </h1>
-          <p className="text-gray-600 font-medium">Please enter your details to sign in</p>
-        </div>
+      {/* Editorial Background Element */}
+      <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary-dark/5 blur-[120px] rounded-full" />
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {errors.root && (
-            <p className="bg-red-50/80 backdrop-blur-sm text-red-700 p-4 rounded-2xl text-sm text-center border border-red-100/50 font-medium">
-              {errors.root.message}
-            </p>
-          )}
+      <div className="w-full max-w-md relative z-10">
+        <header className="text-center mb-10">
+          <h1 className="text-5xl font-display font-black tracking-tighter mb-2 text-primary-dark">Login<span className="text-primary-dark/80">.</span></h1>
+          <p className="text-gray-400 font-medium text-sm">Registry Authentication Required</p>
+        </header>
 
-          <div>
-            <label className="block text-sm font-bold text-gray-800 mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              className={`w-full px-4 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all backdrop-blur-sm bg-white/70 ${
-                errors.email ? "border-red-400 bg-red-50/50" : "border-gray-200/50 hover:border-emerald-300"
-              }`}
-              placeholder="user1@example.com"
-              {...register("email", { required: "Email is required" })}
-            />
-            {errors.email && (
-              <p className="text-red-600 text-sm mt-2 font-medium">
-                {errors.email.message}
-              </p>
+        <main className="panel-card p-8 md:p-10 shadow-2xl shadow-primary-dark/5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {errors.root && (
+              <div className="flex items-center gap-2 p-4 bg-red-50 text-red-600 rounded-xl text-xs font-bold border border-red-100 animate-in fade-in zoom-in duration-300">
+                <ShieldCheck size={16} /> {errors.root.message}
+              </div>
             )}
-          </div>
 
-          <div>
-            <label className="block text-sm font-bold text-gray-800 mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              className={`w-full px-4 py-4 border-2 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all backdrop-blur-sm bg-white/70 ${
-                errors.password ? "border-red-400 bg-red-50/50" : "border-gray-200/50 hover:border-emerald-300"
-              }`}
-              placeholder="••••••••"
-              {...register("password", { required: "Password is required" })}
-            />
-            {errors.password && (
-              <p className="text-red-600 text-sm mt-2 font-medium">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
+            <Field label="Identity" error={errors.email}>
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={18} />
+              <input type="email" placeholder="email@enterprise.com" className={`${inputClass(errors.email)} pl-12`} {...register("email", { required: "Email required" })} />
+            </Field>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-linear-to-r from-emerald-700 to-teal-600 text-white py-4 rounded-2xl font-black hover:from-emerald-800 hover:to-teal-700 transition-all transform hover:scale-[1.02] active:scale-95 disabled:opacity-70 shadow-xl hover:shadow-2xl disabled:hover:scale-100 relative overflow-hidden group"
-          >
-            <span className="relative z-10">{isSubmitting ? "Authenticating..." : "Sign In"}</span>
-            <div className="absolute inset-0 bg-linear-to-r from-emerald-600 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          </button>
-        </form>
-        <p className="mt-6 text-center text-sm text-gray-500 font-medium">
-          Note: Demo credentials are pre-filled for easy testing.
+            <Field label="Access Key" error={errors.password}>
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={18} />
+              <input type="password" placeholder="••••••••" className={`${inputClass(errors.password)} pl-12`} {...register("password", { required: "Password required" })} />
+            </Field>
+
+            <button
+              disabled={isSubmitting}
+              className="w-full bg-action-gradient text-white py-5 rounded-control font-display font-black uppercase tracking-widest text-sm flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 shadow-lg shadow-primary-dark/20 group cursor-pointer"
+            >
+              {isSubmitting ? "Processing..." : <>Sign In <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /></>}
+            </button>
+          </form>
+        </main>
+        
+        <p className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+           Note: Demo credentials are pre-filled for easy testing.
         </p>
       </div>
     </div>
   );
 };
+
+/* Helper Sub-component for cleaner JSX */
+const Field = ({ label, error, children }) => (
+  <div className="space-y-1.5">
+    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">{label}</label>
+    <div className="relative">{children}</div>
+    {error && <p className="text-red-500 text-[10px] font-black uppercase ml-1">{error.message}</p>}
+  </div>
+);
 
 export default LoginPage;

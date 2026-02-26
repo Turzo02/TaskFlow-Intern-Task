@@ -1,1 +1,53 @@
+/* 1. External font imports must be at the very top */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@700,600,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+
+  --color-primary-dark: #0D4D3E;
+  --color-primary-accent: #12634D;
+  --color-primary-soft: #E9F2F0;
+  --color-surface-base: #F1F4F2;
+  --color-content-main: #1A1C1E;
+
+  --radius-panel: 32px;
+  --radius-control: 18px;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui;
+  --font-display: "Clash Display", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-surface-base text-content-main font-sans antialiased tracking-tight;
+  }
+
+
+  h1, h2, h3, h4, .font-heading {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  .panel-card {
+    @apply bg-white border border-white shadow-sm transition-all duration-300 rounded-panel;
+  }
+
+  .panel-card:hover {
+    @apply shadow-md -translate-y-1;
+  }
+
+  .bg-action-gradient {
+    background: linear-gradient(
+      135deg, 
+      var(--color-primary-accent) 0%, 
+      var(--color-primary-dark) 100%
+    );
+  }
+
+  .glass-effect {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20;
+  }
+}

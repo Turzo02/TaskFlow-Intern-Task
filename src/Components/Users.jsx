@@ -89,7 +89,7 @@ const Users = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`px-3 py-1 inline-flex text-sm font-black rounded-full ${
+                      className={`px-4 py-2 inline-flex text-sm text-start uppercase font-black rounded-full ${
                         user.status === 'active'
                           ? 'bg-emerald-100 text-emerald-800'
                           : 'bg-red-100 text-red-800'

@@ -29,10 +29,10 @@ const Overview = () => {
       <div className="p-6">
         <div className="animate-pulse">
           <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="bg-white p-6 rounded-lg shadow">
-                <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+                <div className="h-8 bg-gray-200 rounded w-1/2 mb-2"></div>
                 <div className="h-8 bg-gray-200 rounded w-3/4"></div>
               </div>
             ))}
@@ -54,69 +54,76 @@ const Overview = () => {
     );
   }
 
-  return (
-    <div className="p-6">
-      <h1 className="text-4xl font-black bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent mb-8 tracking-tight">Overview</h1>
+return(
+  <div className="p-6">
+  <h1 className="text-4xl font-extrabold bg-linear-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent mb-8 tracking-tight font-poppins">
+    Overview
+  </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-bold text-gray-700">Total Users</p>
-              <p className="text-3xl font-black text-gray-900 mt-2">
-                {data.totalUsers.toLocaleString()}
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-2xl">
-              <Users className="w-7 h-7 text-blue-700" />
-            </div>
-          </div>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {/* Total Users Card */}
+    <div className="backdrop-blur-xl bg-white/70 p-6 rounded-3xl shadow-xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.05]">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold text-gray-700 font-poppins">Total Users</p>
+          <p className="text-3xl font-extrabold text-gray-900 mt-2 font-poppins">
+            {data.totalUsers.toLocaleString()}
+          </p>
         </div>
-
-        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-bold text-gray-700">Active Users</p>
-              <p className="text-3xl font-black text-gray-900 mt-2">
-                {data.activeUsers.toLocaleString()}
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 p-4 rounded-2xl">
-              <CheckCircle className="w-7 h-7 text-emerald-700" />
-            </div>
-          </div>
-        </div>
-
-        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-bold text-gray-700">Revenue</p>
-              <p className="text-3xl font-black text-gray-900 mt-2">
-                ${data.revenue.toLocaleString()}
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 p-4 rounded-2xl">
-              <DollarSign className="w-7 h-7 text-yellow-700" />
-            </div>
-          </div>
-        </div>
-
-        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-bold text-gray-700">Growth</p>
-              <p className="text-3xl font-black text-gray-900 mt-2">
-                {data.growth}%
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-4 rounded-2xl">
-              <TrendingUp className="w-7 h-7 text-purple-700" />
-            </div>
-          </div>
+        <div className="bg-linear-to-br from-blue-100 to-blue-200 p-4 rounded-2xl">
+          <Users className="w-8 h-8 text-blue-700" />
         </div>
       </div>
     </div>
-  );
+
+    {/* Active Users Card */}
+    <div className="backdrop-blur-xl bg-white/70 p-6 rounded-3xl shadow-xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.05]">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold text-gray-700 font-poppins">Active Users</p>
+          <p className="text-3xl font-extrabold text-gray-900 mt-2 font-poppins">
+            {data.activeUsers.toLocaleString()}
+          </p>
+        </div>
+        <div className="bg-linear-to-br from-emerald-100 to-emerald-200 p-4 rounded-2xl">
+          <CheckCircle className="w-8 h-8 text-emerald-700" />
+        </div>
+      </div>
+    </div>
+
+    {/* Revenue Card */}
+    <div className="backdrop-blur-xl bg-white/70 p-6 rounded-3xl shadow-xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.05]">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold text-gray-700 font-poppins">Revenue</p>
+          <p className="text-3xl font-extrabold text-gray-900 mt-2 font-poppins">
+            ${data.revenue.toLocaleString()}
+          </p>
+        </div>
+        <div className="bg-linear-to-br from-yellow-100 to-yellow-200 p-4 rounded-2xl">
+          <DollarSign className="w-8 h-8 text-yellow-700" />
+        </div>
+      </div>
+    </div>
+
+    {/* Growth Card */}
+    <div className="backdrop-blur-xl bg-white/70 p-6 rounded-3xl shadow-xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.05]">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold text-gray-700 font-poppins">Growth</p>
+          <p className="text-3xl font-extrabold text-gray-900 mt-2 font-poppins">
+            {data.growth}%
+          </p>
+        </div>
+        <div className="bg-linear-to-br from-purple-100 to-purple-200 p-4 rounded-2xl">
+          <TrendingUp className="w-8 h-8 text-purple-700" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+)
 };
 
 export default Overview;
