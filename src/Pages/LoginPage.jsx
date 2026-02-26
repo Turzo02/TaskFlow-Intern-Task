@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+
 
 const LoginPage = () => {
   const {
@@ -7,6 +9,7 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     console.log("Login Data:", data);
@@ -15,6 +18,7 @@ const LoginPage = () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     alert("Login successful!");
+    navigate("/dashboard");
   };
 
   return (

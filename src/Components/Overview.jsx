@@ -25,7 +25,6 @@ const Overview = () => {
   }, []);
 
   if (loading) {
-    // skeleton loading
     return (
       <div className="p-6">
         <div className="animate-pulse">

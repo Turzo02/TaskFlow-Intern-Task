@@ -13,7 +13,7 @@ import UserPage from "./Components/UserPage";
 import ProductPage from "./Components/ProductPage";
 const router = createBrowserRouter([
   {
-    path: "/login",
+    path: "/",
     element: <LoginPage />,
   },
   {
