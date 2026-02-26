@@ -62,124 +62,120 @@ const Products = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Products</h1>
+      <h1 className="text-4xl font-black bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent mb-8 tracking-tight">Products</h1>
       
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Products</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-bold text-gray-700">Total Products</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">
                 {totalProducts}
               </p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-full">
-              <Package className="w-6 h-6 text-blue-600" />
+            <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-2xl">
+              <Package className="w-7 h-7 text-blue-700" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Sales</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-bold text-gray-700">Total Sales</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">
                 {totalSales.toLocaleString()}
               </p>
             </div>
-            <div className="bg-green-100 p-3 rounded-full">
-              <ShoppingCart className="w-6 h-6 text-green-600" />
+            <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 p-4 rounded-2xl">
+              <ShoppingCart className="w-7 h-7 text-emerald-700" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-bold text-gray-700">Total Revenue</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">
                 ${totalRevenue.toLocaleString()}
               </p>
             </div>
-            <div className="bg-yellow-100 p-3 rounded-full">
-              <DollarSign className="w-6 h-6 text-yellow-600" />
+            <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 p-4 rounded-2xl">
+              <DollarSign className="w-7 h-7 text-yellow-700" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Avg Price</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-bold text-gray-700">Avg Price</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">
                 ${avgPrice}
               </p>
             </div>
-            <div className="bg-purple-100 p-3 rounded-full">
-              <Tag className="w-6 h-6 text-purple-600" />
+            <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-4 rounded-2xl">
+              <Tag className="w-7 h-7 text-purple-700" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Products Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="backdrop-blur-xl bg-white/80 rounded-3xl shadow-2xl overflow-hidden border border-white/20">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-emerald-50/80 backdrop-blur-sm border-b border-emerald-100/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Product Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Category
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Price
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Sales
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Revenue
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white/50 divide-y divide-emerald-100/30">
               {products.map((product) => {
                 const revenue = product.price * product.sales;
                 return (
-                  <tr key={product.id} className="hover:bg-gray-50">
+                  <tr key={product.id} className="hover:bg-emerald-50/50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Link
                         to={`/dashboard/products/${product.id}`}
-                        className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                        className="text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline transition-colors"
                       >
                         {product.name}
                       </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        product.category === 'subscription' 
-                          ? 'bg-blue-100 text-blue-800'
-                          : 'bg-green-100 text-green-800'
-                      }`}>
+                      <span className={`px-3 py-1 inline-flex text-sm font-black rounded-full ${product.category === 'subscription' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'}`}>
                         {product.category}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-sm font-medium text-gray-900">
                         ${product.price.toFixed(2)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-sm font-medium text-gray-900">
                         {product.sales.toLocaleString()}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-bold text-gray-900">
                         ${revenue.toLocaleString()}
                       </div>
                     </td>

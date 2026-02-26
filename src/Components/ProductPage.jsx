@@ -99,16 +99,16 @@ const ProductPage = () => {
 
       <div className="max-w-2xl mx-auto">
         {/* Product Card */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="backdrop-blur-xl bg-white/80 rounded-3xl shadow-2xl overflow-hidden border border-white/20">
           {/* Header */}
-          <div className="bg-linear-to-r from-purple-500 to-purple-600 p-6">
+          <div className="bg-gradient-to-r from-emerald-600 to-teal-500 p-6">
             <div className="flex items-center space-x-4">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center">
-                <Package className="w-10 h-10 text-purple-600" />
+              <div className="w-20 h-20 bg-white/90 backdrop-blur-sm rounded-3xl flex items-center justify-center">
+                <Package className="w-10 h-10 text-emerald-600" />
               </div>
               <div className="text-white">
-                <h1 className="text-2xl font-bold">{product.name}</h1>
-                <p className="text-purple-100">Product ID: #{product.id}</p>
+                <h1 className="text-2xl font-black">{product.name}</h1>
+                <p className="text-emerald-100 font-medium">Product ID: #{product.id}</p>
               </div>
             </div>
           </div>
@@ -117,28 +117,28 @@ const ProductPage = () => {
           <div className="p-6">
             <div className="space-y-6">
               {/* Price */}
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <DollarSign className="w-5 h-5 text-green-600" />
+              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
+                <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 p-3 rounded-2xl">
+                  <DollarSign className="w-5 h-5 text-emerald-700" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-500">Price</p>
-                  <p className="text-2xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
+                  <p className="text-sm font-bold text-gray-700">Price</p>
+                  <p className="text-2xl font-black text-gray-900">${product.price.toFixed(2)}</p>
                 </div>
               </div>
 
               {/* Category */}
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-blue-100 p-3 rounded-full">
-                  <Tag className="w-5 h-5 text-blue-600" />
+              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
+                <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-2xl">
+                  <Tag className="w-5 h-5 text-blue-700" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-500">Category</p>
+                  <p className="text-sm font-bold text-gray-700">Category</p>
                   <div className="flex items-center space-x-2">
-                    <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${
+                    <span className={`px-3 py-1 inline-flex text-sm font-black rounded-full ${
                       product.category === 'subscription'
                         ? 'bg-blue-100 text-blue-800'
-                        : 'bg-green-100 text-green-800'
+                        : 'bg-emerald-100 text-emerald-800'
                     }`}>
                       {product.category}
                     </span>
@@ -147,24 +147,24 @@ const ProductPage = () => {
               </div>
 
               {/* Sales */}
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-yellow-100 p-3 rounded-full">
-                  <ShoppingCart className="w-5 h-5 text-yellow-600" />
+              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
+                <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 p-3 rounded-2xl">
+                  <ShoppingCart className="w-5 h-5 text-yellow-700" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-500">Total Sales</p>
-                  <p className="text-2xl font-bold text-gray-900">{product.sales.toLocaleString()}</p>
+                  <p className="text-sm font-bold text-gray-700">Total Sales</p>
+                  <p className="text-2xl font-black text-gray-900">{product.sales.toLocaleString()}</p>
                 </div>
               </div>
 
               {/* Revenue */}
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-purple-100 p-3 rounded-full">
-                  <TrendingUp className="w-5 h-5 text-purple-600" />
+              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
+                <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-2xl">
+                  <TrendingUp className="w-5 h-5 text-purple-700" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-500">Total Revenue</p>
-                  <p className="text-2xl font-bold text-gray-900">${revenue.toLocaleString()}</p>
+                  <p className="text-sm font-bold text-gray-700">Total Revenue</p>
+                  <p className="text-2xl font-black text-gray-900">${revenue.toLocaleString()}</p>
                 </div>
               </div>
             </div>

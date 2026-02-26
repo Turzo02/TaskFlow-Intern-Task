@@ -97,16 +97,16 @@ const UserPage = () => {
 
       <div className="max-w-2xl mx-auto">
         {/* User Card */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="backdrop-blur-xl bg-white/80 rounded-3xl shadow-2xl overflow-hidden border border-white/20">
           {/* Header */}
-          <div className="bg-linear-to-r from-blue-500 to-blue-600 p-6">
+          <div className="bg-gradient-to-r from-emerald-600 to-teal-500 p-6">
             <div className="flex items-center space-x-4">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center">
-                <User className="w-10 h-10 text-blue-600" />
+              <div className="w-20 h-20 bg-white/90 backdrop-blur-sm rounded-3xl flex items-center justify-center">
+                <User className="w-10 h-10 text-emerald-600" />
               </div>
               <div className="text-white">
-                <h1 className="text-2xl font-bold">{user.name}</h1>
-                <p className="text-blue-100">User ID: #{user.id}</p>
+                <h1 className="text-2xl font-black">{user.name}</h1>
+                <p className="text-emerald-100 font-medium">User ID: #{user.id}</p>
               </div>
             </div>
           </div>
@@ -115,37 +115,31 @@ const UserPage = () => {
           <div className="p-6">
             <div className="space-y-6">
               {/* Email */}
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-blue-100 p-3 rounded-full">
-                  <Mail className="w-5 h-5 text-blue-600" />
+              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
+                <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-2xl">
+                  <Mail className="w-5 h-5 text-blue-700" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-500">Email Address</p>
-                  <p className="text-lg font-medium text-gray-900">{user.email}</p>
+                  <p className="text-sm font-bold text-gray-700">Email Address</p>
+                  <p className="text-lg font-black text-gray-900">{user.email}</p>
                 </div>
               </div>
 
               {/* Status */}
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className={`p-3 rounded-full ${
-                  user.status === 'active' 
-                    ? 'bg-green-100' 
-                    : 'bg-red-100'
-                }`}>
-                  {user.status === 'active' ? (
-                    <CheckCircle className="w-5 h-5 text-green-600" />
-                  ) : (
-                    <XCircle className="w-5 h-5 text-red-600" />
-                  )}
+              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
+                <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 p-3 rounded-2xl">
+                  <CheckCircle className="w-5 h-5 text-emerald-700" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-500">Account Status</p>
+                  <p className="text-sm font-bold text-gray-700">Account Status</p>
                   <div className="flex items-center space-x-2">
-                    <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${
-                      user.status === 'active'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
+                    <span
+                      className={`px-3 py-1 inline-flex text-sm font-black rounded-full ${
+                        user.status === 'active'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}
+                    >
                       {user.status}
                     </span>
                   </div>
@@ -153,13 +147,13 @@ const UserPage = () => {
               </div>
 
               {/* Join Date */}
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-purple-100 p-3 rounded-full">
-                  <Calendar className="w-5 h-5 text-purple-600" />
+              <div className="flex items-center space-x-4 p-4 bg-emerald-50/50 backdrop-blur-sm rounded-2xl">
+                <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-2xl">
+                  <Calendar className="w-5 h-5 text-purple-700" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-500">Join Date</p>
-                  <p className="text-lg font-medium text-gray-900">
+                  <p className="text-sm font-bold text-gray-700">Member Since</p>
+                  <p className="text-lg font-black text-gray-900">
                     {new Date(user.joinDate).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',

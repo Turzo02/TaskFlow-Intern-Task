@@ -50,55 +50,55 @@ const Users = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Users</h1>
+      <h1 className="text-4xl font-black bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent mb-8 tracking-tight">Users</h1>
       
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="backdrop-blur-xl bg-white/80 rounded-3xl shadow-2xl overflow-hidden border border-white/20">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-emerald-50/80 backdrop-blur-sm border-b border-emerald-100/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Email
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-black text-emerald-700 uppercase tracking-wider">
                   Join Date
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white/50 divide-y divide-emerald-100/30">
               {users.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50">
+                <tr key={user.id} className="hover:bg-emerald-50/50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Link
                       to={`/dashboard/users/${user.id}`}
-                      className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                      className="text-sm font-bold text-emerald-700 hover:text-emerald-900 hover:underline transition-colors"
                     >
                       {user.name}
                     </Link>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm font-medium text-gray-700">
                       {user.email}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      className={`px-3 py-1 inline-flex text-sm font-black rounded-full ${
                         user.status === 'active'
-                          ? 'bg-green-100 text-green-800'
+                          ? 'bg-emerald-100 text-emerald-800'
                           : 'bg-red-100 text-red-800'
                       }`}
                     >
                       {user.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700">
                     {new Date(user.joinDate).toLocaleDateString()}
                   </td>
                 </tr>

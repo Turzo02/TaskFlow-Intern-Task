@@ -30,21 +30,35 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto flex min-h-screen bg-gray-50">
+    <div className="max-w-7xl mx-auto flex min-h-screen bg-linear-to-br from-emerald-50 via-white to-teal-50 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-60 h-60 bg-linear-to-br from-emerald-200/20 to-teal-200/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-60 h-60 bg-linear-to-tr from-green-200/20 to-emerald-200/20 rounded-full blur-3xl"></div>
+      </div>
+      
+      {/* Mobile overlay */}
+      <div 
+        className={`lg:hidden fixed inset-0 bg-black/50 z-30 transition-opacity duration-300 ${
+          sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setSidebarOpen(false)}
+      />
+      
       {/* Sidebar */}
       <aside
         className={`${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 fixed lg:static w-64 min-h-screen bg-white shadow-lg transition-transform duration-300 z-40`}
+          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        } fixed lg:static w-64 min-h-screen backdrop-blur-xl bg-white/80 shadow-2xl transition-all duration-300 ease-in-out z-40 border-r border-white/20`}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-2xl font-bold text-gray-800">TaskFlow</h1>
+            <h1 className="text-2xl font-black bg-linear-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent tracking-tight">TaskFlow</h1>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+              className="lg:hidden p-2 rounded-xl hover:bg-emerald-50/80 transition-colors"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 text-gray-700" />
             </button>
           </div>
           <nav>
@@ -56,10 +70,10 @@ const DashboardLayout = () => {
                     <Link
                       to={item.to}
                       onClick={() => setSidebarOpen(false)}
-                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-2xl transition-all duration-200 backdrop-blur-sm ${
                         location.pathname === item.to
-                          ? "bg-blue-600 text-white shadow-md"
-                          : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                          ? "bg-linear-to-r from-emerald-600 to-teal-500 text-white shadow-lg font-bold"
+                          : "text-gray-700 hover:bg-emerald-50/80 hover:text-emerald-700 font-medium"
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -75,7 +89,7 @@ const DashboardLayout = () => {
           <div className="absolute bottom-6 left-6 right-6">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 hover:text-red-700 font-medium group"
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-2xl transition-all duration-200 text-red-600 hover:bg-red-50/80 hover:text-red-700 font-bold group backdrop-blur-sm cursor-pointer"
             >
               <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
               <span>Logout</span>
@@ -85,14 +99,14 @@ const DashboardLayout = () => {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 lg:ml-0">
+      <main className="flex-1 relative z-10">
         {/* Mobile menu button - positioned in main content area */}
-        <div className="lg:hidden p-4 bg-white border-b border-gray-200">
+        <div className="lg:hidden p-4 backdrop-blur-xl bg-white/80 border-b border-white/20">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-lg hover:bg-gray-100"
+            className="p-2 rounded-xl hover:bg-emerald-50/80 transition-colors"
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="w-5 h-5 text-gray-700" />
           </button>
         </div>
 

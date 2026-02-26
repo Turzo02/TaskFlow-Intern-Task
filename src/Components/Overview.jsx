@@ -56,61 +56,61 @@ const Overview = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Overview</h1>
+      <h1 className="text-4xl font-black bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent mb-8 tracking-tight">Overview</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Users</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-bold text-gray-700">Total Users</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">
                 {data.totalUsers.toLocaleString()}
               </p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-full">
-              <Users className="w-6 h-6 text-blue-600" />
+            <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-2xl">
+              <Users className="w-7 h-7 text-blue-700" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Active Users</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-bold text-gray-700">Active Users</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">
                 {data.activeUsers.toLocaleString()}
               </p>
             </div>
-            <div className="bg-green-100 p-3 rounded-full">
-              <CheckCircle className="w-6 h-6 text-green-600" />
+            <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 p-4 rounded-2xl">
+              <CheckCircle className="w-7 h-7 text-emerald-700" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Revenue</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-bold text-gray-700">Revenue</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">
                 ${data.revenue.toLocaleString()}
               </p>
             </div>
-            <div className="bg-yellow-100 p-3 rounded-full">
-              <DollarSign className="w-6 h-6 text-yellow-600" />
+            <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 p-4 rounded-2xl">
+              <DollarSign className="w-7 h-7 text-yellow-700" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div className="backdrop-blur-xl bg-white/80 p-6 rounded-3xl shadow-2xl border border-white/20 hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Growth</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-bold text-gray-700">Growth</p>
+              <p className="text-3xl font-black text-gray-900 mt-2">
                 {data.growth}%
               </p>
             </div>
-            <div className="bg-purple-100 p-3 rounded-full">
-              <TrendingUp className="w-6 h-6 text-purple-600" />
+            <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-4 rounded-2xl">
+              <TrendingUp className="w-7 h-7 text-purple-700" />
             </div>
           </div>
         </div>
