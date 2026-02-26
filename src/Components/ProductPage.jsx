@@ -1,0 +1,178 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router';
+import { Package, DollarSign, ShoppingCart, ArrowLeft, Tag, TrendingUp } from 'lucide-react';
+
+const ProductPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`https://task-api-eight-flax.vercel.app/api/products/${id}`);
+        if (!response.ok) {
+          throw new Error('Product not found');
+        }
+        const data = await response.json();
+        setProduct(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchProduct();
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div className="max-w-2xl mx-auto">
+            <div className="h-32 bg-gray-200 rounded-lg mb-6"></div>
+            <div className="space-y-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-16 bg-gray-200 rounded-lg"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <button
+          onClick={() => navigate('/dashboard/products')}
+          className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 mb-6"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Products</span>
+        </button>
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            Error: {error}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="p-6">
+        <button
+          onClick={() => navigate('/dashboard/products')}
+          className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 mb-6"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Products</span>
+        </button>
+        <div className="max-w-2xl mx-auto text-center text-gray-500">
+          Product not found
+        </div>
+      </div>
+    );
+  }
+
+  const revenue = product.price * product.sales;
+
+  return (
+    <div className="p-6">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate('/dashboard/products')}
+        className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 mb-6"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        <span>Back to Products</span>
+      </button>
+
+      <div className="max-w-2xl mx-auto">
+        {/* Product Card */}
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          {/* Header */}
+          <div className="bg-linear-to-r from-purple-500 to-purple-600 p-6">
+            <div className="flex items-center space-x-4">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center">
+                <Package className="w-10 h-10 text-purple-600" />
+              </div>
+              <div className="text-white">
+                <h1 className="text-2xl font-bold">{product.name}</h1>
+                <p className="text-purple-100">Product ID: #{product.id}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Product Details */}
+          <div className="p-6">
+            <div className="space-y-6">
+              {/* Price */}
+              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                <div className="bg-green-100 p-3 rounded-full">
+                  <DollarSign className="w-5 h-5 text-green-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-500">Price</p>
+                  <p className="text-2xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
+                </div>
+              </div>
+
+              {/* Category */}
+              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                <div className="bg-blue-100 p-3 rounded-full">
+                  <Tag className="w-5 h-5 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-500">Category</p>
+                  <div className="flex items-center space-x-2">
+                    <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${
+                      product.category === 'subscription'
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-green-100 text-green-800'
+                    }`}>
+                      {product.category}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sales */}
+              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                <div className="bg-yellow-100 p-3 rounded-full">
+                  <ShoppingCart className="w-5 h-5 text-yellow-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-500">Total Sales</p>
+                  <p className="text-2xl font-bold text-gray-900">{product.sales.toLocaleString()}</p>
+                </div>
+              </div>
+
+              {/* Revenue */}
+              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                <div className="bg-purple-100 p-3 rounded-full">
+                  <TrendingUp className="w-5 h-5 text-purple-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-gray-500">Total Revenue</p>
+                  <p className="text-2xl font-bold text-gray-900">${revenue.toLocaleString()}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductPage;
