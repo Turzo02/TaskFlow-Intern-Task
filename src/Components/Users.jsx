@@ -60,7 +60,7 @@ const Users = () => {
 const UserCard = ({ user }) => (
   <Link
     to={`/dashboard/users/${user.id}`}
-    className="bg-action-gradient rounded-panel p-10 text-white flex flex-col justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/15 hover:scale-[1.02] transition-all duration-500 border border-white/10"
+    className="bg-action-gradient rounded-panel p-10 text-white flex flex-col justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/15 transition-all duration-500 border border-white/10"
   >
     {/* Large Background Glyph */}
     <span className="absolute -right-6 -top-10 text-[14rem] font-display font-black opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
@@ -69,7 +69,7 @@ const UserCard = ({ user }) => (
 
     <div className="relative z-10">
       <div className="flex justify-between items-start mb-10">
-        <div className="w-16 h-16 bg-white/20 rounded-control flex items-center justify-center font-display font-black text-2xl shadow-inner border border-white/30">
+        <div className="w-16 h-16 bg-white/10 rounded-control flex items-center justify-center font-display font-black text-2xl shadow-inner border border-white/20">
           {user.name.charAt(0)}
         </div>
         <span
@@ -84,7 +84,7 @@ const UserCard = ({ user }) => (
       </div>
 
       {/* Increased Typography Scale */}
-      <h3 className="text-4xl md:text-5xl font-display font-black tracking-tighter mb-6 leading-none group-hover:translate-x-2 transition-transform duration-500">
+      <h3 className="text-4xl md:text-5xl font-display font-black tracking-tight mb-6 leading-none group-hover:translate-x-2 transition-transform duration-500">
         {user.name}
       </h3>
 
