@@ -1,6 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
-import { ArrowLeft, Package, Activity, Fingerprint } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
+import {
+  ArrowLeft,
+  Package,
+  Activity,
+  Fingerprint,
+  ShoppingBag,
+  Globe,
+  BarChart3,
+  Shield,
+  ShieldAlertIcon,
+} from "lucide-react";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -12,98 +22,170 @@ const ProductPage = () => {
   useEffect(() => {
     if (!id) return;
     fetch(`https://task-api-eight-flax.vercel.app/api/products/${id}`)
-      .then(res => res.ok ? res.json() : Promise.reject('Registry Error'))
+      .then((res) => (res.ok ? res.json() : Promise.reject("Registry Error")))
       .then(setProduct)
-      .catch(err => setError(err))
+      .catch(setError)
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <div className="p-20 animate-pulse font-display font-black opacity-20 text-4xl">LOADING...</div>;
-  if (error || !product) return <div className="p-20 font-display font-black text-red-500">ENTRY NOT FOUND</div>;
+  if (loading) return <LoadingState />;
+  if (error || !product)
+    return <ErrorState onBack={() => navigate("/dashboard/products")} />;
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-6">
-      {/* Navigation */}
-      <button 
-        onClick={() => navigate('/dashboard/products')}
-        className="mb-12 flex items-center gap-2 font-black text-[10px] uppercase tracking-[0.3em] text-primary-accent hover:opacity-60 transition-opacity"
-      >
-        <ArrowLeft size={14} /> Close Registry
-      </button>
-
-      <div className="flex flex-col md:flex-row gap-12 items-stretch">
-        
-        {/* Identity Block - Only Name and ID */}
-        <div className="md:w-1/2 bg-action-gradient rounded-panel p-10 text-white flex flex-col justify-between shadow-2xl shadow-primary-dark/20">
-          <div className="space-y-6">
-            <div className="w-16 h-16 glass-effect rounded-control flex items-center justify-center">
-              <Package size={32} />
-            </div>
-            <h1 className="text-6xl font-display font-black tracking-tighter leading-none">
-              {product.name}
-            </h1>
+    <div className="max-w-6xl mx-auto py-10 px-6 animate-in fade-in zoom-in-95 duration-700">
+      {/* Navigation Header */}
+      <header className="flex justify-between items-center mb-12 border-b border-surface-base pb-6">
+        <button
+          onClick={() => navigate("/dashboard/products")}
+          className="group flex items-center gap-3 font-black text-[10px] uppercase tracking-[0.3em]  text-primary-dark transition-all cursor-pointer"
+        >
+          <div className="w-8 h-8 rounded-full border  flex items-center justify-center border-primary-dark">
+            <ArrowLeft
+              size={14}
+            />
           </div>
-          
-          <div className="pt-10 flex items-center gap-4 border-t border-white/10">
-            <Fingerprint size={24} className="opacity-40" />
+          Exit Product View
+        </button>
+        <div className="flex items-center gap-3 text-primary-accent  font-display font-black text-xs tracking-[0.2em]">
+          <ShieldAlertIcon size={14} /> ENCRYPTED_DATA // PID-00{product.id}
+        </div>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Main Identity Card (Primary Focus) */}
+        <div className="lg:col-span-5 bg-action-gradient rounded-panel py-12 px-8 text-white relative overflow-hidden shadow-2xl min-h-130 flex flex-col justify-between border border-white/5">
+
+          <div className="relative z-10 space-y-8">
+            <div className="w-20 h-20 bg-white/10 rounded-control flex items-center justify-center shadow-inner border border-white/20">
+              <ShoppingBag size={36} strokeWidth={1.5} />
+            </div>
             <div>
-              <p className="text-[10px] font-black uppercase tracking-widest opacity-50">Unique Identifier</p>
-              <p className="font-display font-bold tracking-tight">PID-00{product.id}</p>
+              <p className="text-primary-soft/40 font-black uppercase tracking-[0.4em] text-[10px] mb-3">
+                Core Asset
+              </p>
+              <h1 className="text-5xl md:text-6xl font-display font-black tracking-tighter leading-none ">
+                {product.name}
+              </h1>
+            </div>
+          </div>
+
+          <div className="relative z-10 pt-10 border-t border-white/10 flex items-center gap-6">
+            <div className="p-3 bg-white/5 rounded-inner border border-white/10">
+              <Fingerprint size={28} className="text-primary-soft/60" />
+            </div>
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-primary-soft/30">
+                System Hash
+              </p>
+              <p className="font-display font-bold tracking-tight text-xl opacity-80">
+                VERIFIED_LOG_0{product.id}
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Technical Data Sheet - Only Price, Sales, Category */}
-        <div className="md:w-1/2 flex flex-col justify-center space-y-1">
-          <header className="mb-6 px-4">
-            <div className="flex items-center gap-2 text-emerald-600 mb-1">
-              <Activity size={14} />
-              <span className="text-[10px] font-black uppercase tracking-widest">Active Entry</span>
+        {/* Technical Grid (All Gradient Themed) */}
+        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="sm:col-span-2 px-2 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-emerald-600">
+              <Activity size={14} className="animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest">
+                Live Metadata
+              </span>
             </div>
-            <h2 className="text-2xl font-display font-black uppercase tracking-tight">Technical Specs</h2>
-          </header>
+            <span className="h-px grow mx-6 bg-surface-base" />
+          </div>
 
-          <SpecItem 
-            label="Valuation" 
-            value={`$${product.price.toFixed(2)}`} 
-            detail="Current market list price per unit."
+          <SpecCard
+            icon={BarChart3}
+            label="Valuation"
+            value={`$${product.price.toLocaleString()}`}
+            detail="Current list price"
           />
-          <SpecItem 
-            label="Market Volume" 
-            value={product.sales.toLocaleString()} 
-            detail="Total units successfully distributed."
-          />
-          <SpecItem 
-            label="Classification" 
-            value={product.category} 
-            detail="System categorized asset type."
-            isCaps
+          <SpecCard
+            icon={Globe}
+            label="Distribution"
+            value={product.sales.toLocaleString()}
+            detail="Global units sold"
           />
 
-          <footer className="mt-8 px-4 pt-6 border-t border-gray-200">
-            <p className="text-[9px] text-gray-400 font-medium leading-relaxed">
-              This data is fetched directly from the secure registry. Any modifications to unit valuation or classification must be authorized by system admins.
-            </p>
-          </footer>
+          {/* Classification Banner - Full Width Gradient */}
+          <div className="sm:col-span-2 group bg-action-gradient p-10 rounded-panel text-white relative overflow-hidden border border-white/5 shadow-xl transition-all hover:shadow-primary-dark/20">
+            <div className="relative z-10 flex justify-between items-end">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-soft/40 mb-2">
+                  Category Assignment
+                </p>
+                <p className="text-5xl font-display font-black  uppercase tracking-tighter text-white">
+                  {product.category}
+                </p>
+                <p className="text-[10px] text-primary-soft/30 font-medium mt-6 leading-relaxed max-w-sm ">
+                  Registry entry secured under Protocol-X. Re-classification
+                  requires high-level clearance.
+                </p>
+              </div>
+              <Package
+                size={300}
+                className="absolute -right-20 -top-10 opacity-5 rotate-12 scale-90 group-hover:rotate-0 pointer-events-none group-hover:opacity-10 group-hover:scale-110 transition-all duration-500 ease-in-out"
+              />
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
   );
 };
 
-/* Internal UI Component for Minimalist Data Presentation */
-const SpecItem = ({ label, value, detail, isCaps }) => (
-  <div className="group p-4 rounded-control hover:bg-white hover:shadow-xl hover:shadow-primary-dark/5 transition-all border border-transparent">
-    <div className="flex justify-between items-baseline mb-1">
-      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{label}</span>
-      <span className={`text-2xl font-display font-black text-primary-dark tracking-tighter ${isCaps ? 'uppercase' : ''}`}>
+/* --- Unified Gradient Sub-components --- */
+
+const SpecCard = ({ icon: Icon, label, value, detail }) => (
+  <div className="bg-action-gradient p-10 rounded-panel text-white border border-white/5 relative group overflow-hidden shadow-lg transition-all hover:shadow-2xl">
+    <Icon
+      size={100}
+      className="absolute -right-6 -bottom-6 rotate-12 opacity-5 scale-0 group-hover:opacity-10 transition-all duration-500 ease-in-out transform group-hover:scale-110 group-hover:-translate-x-12 group-hover:-translate-y-12 group-hover:rotate-0"
+    />
+
+    <div className="relative z-10">
+      <div className="w-12 h-12 rounded-control bg-white/10 border border-white/10 flex items-center justify-center mb-10 transition-all">
+        <Icon size={20} />
+      </div>
+      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-soft/40 mb-1">
+        {label}
+      </p>
+      <p className="text-4xl font-display font-black  tracking-tighter mb-2">
         {value}
-      </span>
+      </p>
+      <p className="text-[10px] text-primary-soft/30 font-bold uppercase tracking-widest">
+        {detail}
+      </p>
     </div>
-    <p className="text-[10px] text-gray-400 font-medium italic opacity-0 group-hover:opacity-100 transition-opacity">
-      {detail}
+  </div>
+);
+
+const LoadingState = () => (
+  <div className="min-h-[60vh] flex flex-col items-center justify-center gap-6 animate-pulse">
+    <div className="w-20 h-20 border-8 border-primary-soft/20 border-t-primary-accent rounded-full animate-spin" />
+    <p className="font-display font-black text-2xl tracking-tighter  text-gray-400 uppercase">
+      Accessing Files...
     </p>
+  </div>
+);
+
+const ErrorState = ({ onBack }) => (
+  <div className="min-h-[60vh] flex flex-col items-center justify-center text-center p-12">
+    <div className="w-24 h-24 bg-red-500/10 text-red-500 rounded-panel flex items-center justify-center mb-8 border border-red-500/20">
+      <Package size={48} />
+    </div>
+    <h2 className="text-5xl font-display font-black tracking-tighter mb-4 ">
+      Registry Error.
+    </h2>
+    <button
+      onClick={onBack}
+      className="bg-action-gradient text-white px-10 py-4 rounded-control font-black text-[10px] uppercase tracking-widest shadow-xl border border-white/10"
+    >
+      Return to Directory
+    </button>
   </div>
 );
 

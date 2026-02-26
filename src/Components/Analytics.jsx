@@ -49,8 +49,8 @@ const Analytics = () => {
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
       <header className="flex justify-between items-end">
         <div>
-          <h1 className="text-6xl font-display font-black tracking-tighter ">
-            Analytics<span className="text-primary-accent opacity-50">.</span>
+          <h1 className="text-6xl font-display font-black  text-primary-accent tracking-tighter ">
+            Analytics<span className="text-primary-accent opacity-50"> .</span>
           </h1>
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mt-2 flex items-center gap-2">
             <BarChart3 size={12} className="text-primary-accent" /> Conversion
@@ -64,14 +64,14 @@ const Analytics = () => {
         {metrics.map((m, i) => (
           <div
             key={i}
-            className="bg-action-gradient rounded-panel p-8 text-white relative overflow-hidden group shadow-2xl shadow-primary-dark/10 transition-transform hover:scale-[1.02] "
+            className="bg-action-gradient rounded-panel p-8 text-white relative overflow-hidden group shadow-2xl shadow-primary-dark/10 transition-transform cursor-pointer"
           >
             <m.icon
               size={80}
-              className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all group-hover:rotate-12"
+              className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all group-hover:-rotate-10 group-hover:scale-110 duration-500 ease-in-out group-hover:-translate-x-16 group-hover:-translate-y-16"
             />
             <div className="relative z-10">
-              <div className="w-12 h-12 bg-white/20 rounded-control flex items-center justify-center mb-6 border border-white/10 group-hover:bg-white group-hover:text-primary-dark transition-all duration-500 ease-in-out">
+              <div className="w-12 h-12 bg-white/20 rounded-control flex items-center justify-center mb-6 border border-white/10 transition-all duration-500 ease-in-out">
                 <m.icon size={20} />
               </div>
               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-soft/50 mb-1">
@@ -150,7 +150,7 @@ const AnalyticsRow = ({ item }) => {
       </td>
       <td className="px-10 py-6">
         <span
-          className={`px-4 py-2 rounded-xl text-sm font-black  text-primary-dark tracking-widest uppercase border ${status}`}
+          className={`px-4 py-2 rounded-md text-sm font-black  text-primary-dark tracking-widest uppercase border ${status}`}
         >
           {rate.toFixed(1)}%
         </span>

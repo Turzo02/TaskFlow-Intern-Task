@@ -49,7 +49,7 @@ const Overview = () => {
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-1000">
       <header className="flex justify-between items-end">
         <div>
-          <h1 className="text-6xl font-display font-black tracking-tighter">
+          <h1 className="text-6xl font-display font-black  text-primary-accent tracking-tighter">
             Overview<span className="text-primary-accent opacity-50">.</span>
           </h1>
           <p className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.3em] mt-2 flex items-center gap-2">
@@ -71,11 +71,11 @@ const Overview = () => {
 /* --- Refined Sub-components --- */
 
 const StatCard = ({ label, val, icon: Icon }) => (
-  <div className="bg-action-gradient rounded-panel p-10 text-white flex items-center justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/10 hover:scale-[1.01] transition-all duration-500 cursor-pointer">
+  <div className="bg-action-gradient rounded-panel p-10 text-white flex items-center justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/10 transition-all duration-500 cursor-pointer">
     {/* Decorative background icon */}
     <Icon
       size={120}
-      className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all duration-500"
+      className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all group-hover:-rotate-10 group-hover:scale-110 duration-500 ease-in-out group-hover:-translate-x-16 group-hover:-translate-y-16"
     />
 
     <div className="relative z-10 space-y-2">

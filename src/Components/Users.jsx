@@ -32,7 +32,7 @@ const Users = () => {
       {/* Editorial Header */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-7xl font-display font-black tracking-tighter">
+          <h1 className="text-7xl font-display font-black text-primary-accent tracking-tighter">
             Directory<span className="text-primary-accent opacity-50">.</span>
           </h1>
           <p className="text-xs font-black uppercase tracking-[0.4em] text-gray-400 mt-3 flex items-center gap-2">
@@ -73,7 +73,7 @@ const UserCard = ({ user }) => (
           {user.name.charAt(0)}
         </div>
         <span
-          className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md border ${
+          className={`px-4 py-1.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md border ${
             user.status === "active"
               ? "bg-emerald-500/30 border-emerald-400/40 text-emerald-100"
               : "bg-red-500/30 border-red-400/40 text-red-100"
