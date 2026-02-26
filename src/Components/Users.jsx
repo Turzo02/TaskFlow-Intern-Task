@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { UserPlus, Search, AlertCircle, ChevronRight } from "lucide-react";
+import {
+  UserPlus,
+  AlertCircle,
+  ChevronRight,
+  Mail,
+  Calendar,
+  ShieldCheck,
+} from "lucide-react";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -9,8 +16,10 @@ const Users = () => {
 
   useEffect(() => {
     fetch("https://task-api-eight-flax.vercel.app/api/users")
-      .then((res) => res.json())
-      .then((data) => setUsers(data))
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject("Personnel link severed"),
+      )
+      .then(setUsers)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
@@ -19,87 +28,116 @@ const Users = () => {
   if (error) return <ErrorState message={error} />;
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+      {/* Editorial Header */}
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-5xl font-display font-black tracking-tighter">
-            Directory<span className="text-primary-accent">.</span>
+          <h1 className="text-7xl font-display font-black tracking-tighter">
+            Directory<span className="text-primary-accent opacity-50">.</span>
           </h1>
-          <p className="text-gray-400 font-medium mt-1">Manage and audit system personnel</p>
+          <p className="text-xs font-black uppercase tracking-[0.4em] text-gray-400 mt-3 flex items-center gap-2">
+            <ShieldCheck size={14} className="text-primary-accent" /> System
+            Personnel Registry
+          </p>
         </div>
-        <button className="bg-action-gradient text-white px-6 py-3 rounded-control font-display font-black text-xs uppercase tracking-widest shadow-lg shadow-primary-dark/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+        <button className="bg-action-gradient text-white px-10 py-5 rounded-control font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary-dark/30 hover:scale-101 cursor-pointer active:scale-95 transition-all flex items-center gap-3">
           <UserPlus size={18} /> Add User
         </button>
       </header>
 
-      <div className="panel-card overflow-hidden border-none shadow-2xl shadow-primary-dark/5">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-surface-base">
-                {["Personnel", "Contact", "Status", "Joined", ""].map((h) => (
-                  <th key={h} className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-surface-base">
-              {users.map((user) => (
-                <UserRow key={user.id} user={user} />
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Personnel Grid - Constrained to Max 2 Columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {users.map((user) => (
+          <UserCard key={user.id} user={user} />
+        ))}
       </div>
     </div>
   );
 };
 
-/* --- Sub-components --- */
+/* --- Enhanced User Card (Bigger Text & Max 2 Col Layout) --- */
 
-const UserRow = ({ user }) => (
-  <tr className="group hover:bg-primary-soft/30 transition-colors">
-    <td className="px-8 py-5">
-      <Link to={`/dashboard/users/${user.id}`} className="flex items-center gap-3 group/link">
-        <div className="w-10 h-10 rounded-full bg-primary-dark text-white flex items-center justify-center font-display font-bold text-sm">
+const UserCard = ({ user }) => (
+  <Link
+    to={`/dashboard/users/${user.id}`}
+    className="bg-action-gradient rounded-panel p-10 text-white flex flex-col justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/15 hover:scale-[1.02] transition-all duration-500 border border-white/10"
+  >
+    {/* Large Background Glyph */}
+    <span className="absolute -right-6 -top-10 text-[14rem] font-display font-black opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
+      {user.name.charAt(0)}
+    </span>
+
+    <div className="relative z-10">
+      <div className="flex justify-between items-start mb-10">
+        <div className="w-16 h-16 bg-white/20 rounded-control flex items-center justify-center font-display font-black text-2xl shadow-inner border border-white/30">
           {user.name.charAt(0)}
         </div>
-        <span className="font-display font-bold text-content-main group-hover/link:text-primary-accent transition-colors">
-          {user.name}
+        <span
+          className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md border ${
+            user.status === "active"
+              ? "bg-emerald-500/30 border-emerald-400/40 text-emerald-100"
+              : "bg-red-500/30 border-red-400/40 text-red-100"
+          }`}
+        >
+          {user.status}
         </span>
-      </Link>
-    </td>
-    <td className="px-8 py-5 text-sm font-medium text-gray-500">{user.email}</td>
-    <td className="px-8 py-5">
-      <span className={`
-        px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider
-        ${user.status === "active" ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"}
-      `}>
-        {user.status}
+      </div>
+
+      {/* Increased Typography Scale */}
+      <h3 className="text-4xl md:text-5xl font-display font-black tracking-tighter mb-6 leading-none group-hover:translate-x-2 transition-transform duration-500">
+        {user.name}
+      </h3>
+
+      <div className="space-y-4 opacity-80 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest">
+          <Mail size={16} className="text-primary-soft" /> {user.email}
+        </div>
+        <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest">
+          <Calendar size={16} className="text-primary-soft" /> Registry Entry:{" "}
+          {new Date(user.joinDate).toLocaleDateString(undefined, {
+            month: "long",
+            year: "numeric",
+          })}
+        </div>
+      </div>
+    </div>
+
+    <div className="mt-12 pt-8 border-t border-white/10 flex justify-between items-center relative z-10">
+      <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-50 group-hover:opacity-100 transition-opacity">
+        Access Personnel File
       </span>
-    </td>
-    <td className="px-8 py-5 text-sm font-bold text-gray-400">
-      {new Date(user.joinDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-    </td>
-    <td className="px-8 py-5 text-right">
-      <ChevronRight className="inline-block text-gray-300 group-hover:text-primary-dark group-hover:translate-x-1 transition-all" size={20} />
-    </td>
-  </tr>
+      <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-primary-dark transition-all">
+        <ChevronRight size={24} />
+      </div>
+    </div>
+  </Link>
 );
 
 const LoadingSkeleton = () => (
-  <div className="space-y-8 animate-pulse">
-    <div className="h-12 bg-gray-200 rounded-control w-64" />
-    <div className="panel-card h-96 bg-white/50" />
+  <div className="space-y-12 animate-pulse">
+    <div className="h-20 bg-gray-200 rounded-control w-1/3" />
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {[1, 2].map((i) => (
+        <div
+          key={i}
+          className="h-80 bg-white rounded-panel shadow-sm border border-surface-base"
+        />
+      ))}
+    </div>
   </div>
 );
 
 const ErrorState = ({ message }) => (
-  <div className="panel-card p-12 text-center max-w-lg mx-auto border-red-100">
-    <AlertCircle className="mx-auto text-red-500 mb-4" size={48} />
-    <h2 className="text-xl font-display font-bold">Access Interrupted</h2>
-    <p className="text-sm text-gray-400 mt-2">{message}</p>
+  <div className="min-h-[50vh] flex items-center justify-center p-10">
+    <div className="panel-card p-16 text-center max-w-xl shadow-2xl border-red-50">
+      <AlertCircle className="mx-auto text-red-500 mb-6" size={64} />
+      <h2 className="text-4xl font-display font-black tracking-tight mb-4">
+        Registry Fault
+      </h2>
+      <p className="text-gray-400 font-medium text-lg leading-relaxed">
+        {message}
+      </p>
+    </div>
   </div>
 );
 

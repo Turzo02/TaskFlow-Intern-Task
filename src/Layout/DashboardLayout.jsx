@@ -57,7 +57,7 @@ const DashboardLayout = () => {
             <h1 className="text-3xl font-display font-black tracking-tighter">
               TaskFlow<span className="text-primary-accent">.</span>
             </h1>
-            <button className="lg:hidden p-2 text-gray-400" onClick={() => setSidebarOpen(false)}>
+            <button className="lg:hidden p-2 text-gray-400 cursor-pointer" onClick={() => setSidebarOpen(false)}>
               <X size={20} />
             </button>
           </div>

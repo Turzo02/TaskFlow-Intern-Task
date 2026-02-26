@@ -1,67 +1,64 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { Home, ArrowLeft, Search } from 'lucide-react';
+import { Home, ArrowLeft, Search, LayoutDashboard } from 'lucide-react';
 
 const NotFound = () => {
   const navigate = useNavigate();
+  const hasToken = !!localStorage.getItem("token");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full">
-        <div className="backdrop-blur-xl bg-white/80 rounded-3xl shadow-2xl p-12 border border-white/20">
-          {/* 404 Icon */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 p-6 rounded-3xl">
-              <Search className="w-16 h-16 text-emerald-700" />
-            </div>
-          </div>
+    <div className="min-h-screen flex items-center justify-center p-6 bg-surface-base">
+      <div className="max-w-xl w-full animate-in fade-in zoom-in duration-500">
+        
+        {/* Main Card with Green Gradient */}
+        <div className="bg-action-gradient rounded-panel p-12 text-white shadow-2xl shadow-primary-dark/20 text-center relative overflow-hidden">
+          
+          {/* Decorative Background Icon */}
+          <Search size={200} className="absolute -top-10 -right-10 opacity-10 rotate-12" />
 
-          {/* Error Code */}
-          <div className="text-center mb-6">
-            <h1 className="text-8xl font-black bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent">
+          <div className="relative z-10">
+            {/* Icon Header */}
+            <div className="glass-effect w-20 h-20 rounded-control flex items-center justify-center mx-auto mb-8">
+              <Search size={40} className="text-white" />
+            </div>
+
+            {/* Content */}
+            <h1 className="text-9xl font-display font-black tracking-tighter mb-2 opacity-90">
               404
             </h1>
-          </div>
-
-          {/* Error Message */}
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-black text-gray-900 mb-3">
-              Page Not Found
+            <h2 className="text-2xl font-display font-bold mb-4 uppercase tracking-widest">
+              Lost in Space
             </h2>
-            <p className="text-gray-600 font-medium">
-              Oops! The page you're looking for seems to have vanished into the digital void.
+            <p className="text-primary-soft/70 font-medium mb-10 max-w-xs mx-auto">
+              The entry you are looking for has been moved or purged from the registry.
             </p>
-          </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {localStorage.getItem("token") && (
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {hasToken ? (
             <button
-              onClick={() => navigate('/dashboard')}
-              className="flex items-center justify-center space-x-2 bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-6 py-3 rounded-2xl font-black hover:from-emerald-700 hover:to-teal-600 transition-all duration-300 hover:scale-[1.02] shadow-lg"
-            >
-              <Home className="w-4 h-4" />
-              <span>Go to Dashboard</span>
-            </button>
-            )}
-            {!localStorage.getItem("token") && (
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center justify-center space-x-2 bg-white border-2 border-emerald-200 text-emerald-700 px-6 py-3 rounded-2xl font-black hover:bg-emerald-50 transition-all duration-300 hover:scale-[1.02]"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Go Back</span>
-            </button>
-            )}
-          </div>
+                  onClick={() => navigate(-1)}
+                  className="flex items-center justify-center gap-2 glass-effect text-primary-dark hover:text-white px-8 py-4 rounded-control font-black uppercase text-[10px] tracking-[0.2em] hover:bg-white/20 transition-all cursor-pointer"
+                >
+                  <LayoutDashboard size={16} /> Dashboard
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate(-1)}
+                  className="flex items-center justify-center gap-2 glass-effect text-primary-dark hover:text-white px-8 py-4 rounded-control font-black uppercase text-[10px] tracking-[0.2em] hover:bg-white/20 transition-all cursor-pointer"
+                >
+                  <ArrowLeft size={16} /> Go Back
+                </button>
+              )}
+            </div>
 
-          {/* Help Text */}
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500 font-medium">
-              If you believe this is an error, please contact our support team.
+            {/* Support Footer */}
+            <p className="mt-12 text-[10px] font-bold uppercase tracking-widest opacity-40">
+              Report connectivity issue? <span className="underline cursor-pointer ">Contact Support</span>
             </p>
           </div>
         </div>
+        
       </div>
     </div>
   );
