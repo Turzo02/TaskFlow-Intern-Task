@@ -32,9 +32,7 @@ const LoginPage = () => {
   `;
 
   return (
-    <div className="min-h-screen bg-surface-base flex items-center justify-center p-6 relative overflow-hidden">
-      <Toaster />
-      
+    <div className="min-h-screen bg-surface-base flex items-center justify-center p-6 relative overflow-hidden">      
       {/* Editorial Background Element */}
       <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary-dark/5 blur-[120px] rounded-full" />
 
