@@ -117,7 +117,7 @@ const LoadingSkeleton = () => (
   <div className="space-y-12 animate-pulse">
     <div className="h-20 bg-gray-200 rounded-control w-1/3" />
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {[1, 2].map((i) => (
+      {[1, 2, 3, 4, 5].map((i) => (
         <div
           key={i}
           className="h-80 bg-white rounded-panel shadow-sm border border-surface-base"

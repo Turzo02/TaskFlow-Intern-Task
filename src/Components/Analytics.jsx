@@ -60,7 +60,7 @@ const Analytics = () => {
       </header>
 
       {/* Action Gradient Metric Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {metrics.map((m, i) => (
           <div
             key={i}
@@ -68,18 +68,20 @@ const Analytics = () => {
           >
             <m.icon
               size={80}
-              className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all group-hover:-rotate-10 group-hover:scale-110 duration-500 ease-in-out group-hover:-translate-x-16 group-hover:-translate-y-16"
+              className="absolute right-6 scale-0 opacity-5 group-hover:opacity-10 rotate-45 transition-all group-hover:scale-110 duration-500 group-hover:rotate-0 ease-in-out group-hover:-translate-x-22"
             />
-            <div className="relative z-10">
-              <div className="w-12 h-12 bg-white/20 rounded-control flex items-center justify-center mb-6 border border-white/10 transition-all duration-500 ease-in-out">
-                <m.icon size={20} />
+            <div className="relative z-10 flex items-center justify-between md:gap-8 gap-4">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-soft/50 mb-1">
+                  {m.label}
+                </p>
+                <p className="text-4xl font-display font-black tracking-tighter ">
+                  {m.val}
+                </p>
               </div>
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-soft/50 mb-1">
-                {m.label}
-              </p>
-              <p className="text-4xl font-display font-black tracking-tighter ">
-                {m.val}
-              </p>
+              <div className="w-16 h-16 bg-white/20 rounded-control flex items-center justify-center border p-2 border-white/10 transition-all duration-500 ease-in-out">
+                <m.icon size={32} strokeWidth={2.5} />
+              </div>
             </div>
           </div>
         ))}
@@ -162,7 +164,7 @@ const AnalyticsRow = ({ item }) => {
 const LoadingSkeleton = () => (
   <div className="space-y-12 animate-pulse">
     <div className="h-16 bg-gray-200 rounded-control w-1/4" />
-    <div className="grid grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {[...Array(4)].map((_, i) => (
         <div key={i} className="h-40 bg-white rounded-panel" />
       ))}

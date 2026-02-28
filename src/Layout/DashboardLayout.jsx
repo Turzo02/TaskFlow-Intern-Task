@@ -33,8 +33,8 @@ const DashboardLayout = () => {
 
       {/* Sidebar Navigation */}
       <aside className={`
-        fixed lg:sticky top-0 left-0 h-screen w-80 z-50 transition-all duration-500 ease-in-out
-        bg-white/90 backdrop-blur-3xl border-r border-white/50
+        fixed lg:sticky top-0 left-0 h-screen w-80 z-50 transition-all duration-500 ease-in-out bg-white/90 backdrop-blur-3xl border-x
+         border-primary-dark/10
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `}>
         <div className="flex flex-col h-full p-10">

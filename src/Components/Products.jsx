@@ -47,13 +47,13 @@ const Products = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {summary.map((s, i) => (
-          <div key={i} className="bg-action-gradient rounded-panel p-10 text-white flex items-center justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/10 transition-transform cursor-pointer">
+          <div key={i} className="bg-action-gradient rounded-panel p-10 text-white flex flex-col-reverse md:flex-row items-start md:items-center justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/10 transition-transform cursor-pointer">
             <s.icon size={120} className="absolute -right-4 rotate-45 opacity-5 scale-0 group-hover:opacity-10 transition-all group-hover:scale-[1] duration-500 ease-in-out group-hover:-translate-x-32 group-hover:rotate-0" />
             <div className="relative z-10">
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-soft/50 mb-1">{s.label}</p>
               <p className="text-4xl font-display font-black tracking-tighter leading-none">{s.val}</p>
             </div>
-            <div className="relative z-10 p-4 bg-white rounded-control border border-white/10  text-primary-dark transition-all duration-400 ease-in-out">
+            <div className="relative z-10 p-4 bg-white rounded-control border border-white/10  text-primary-dark transition-all duration-400 ease-in-out mb-6 md:mb-0">
               <s.icon size={28} />
             </div>
           </div>

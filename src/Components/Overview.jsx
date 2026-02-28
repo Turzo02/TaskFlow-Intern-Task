@@ -71,7 +71,7 @@ const Overview = () => {
 /* --- Refined Sub-components --- */
 
 const StatCard = ({ label, val, icon: Icon }) => (
-  <div className="bg-action-gradient rounded-panel p-10 text-white flex items-center justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/10 transition-all duration-500 cursor-pointer">
+  <div className="bg-action-gradient rounded-panel p-10 text-white flex flex-col-reverse md:flex-row items-start md:items-center justify-between group relative overflow-hidden shadow-2xl shadow-primary-dark/10 transition-all duration-500 cursor-pointer">
     {/* Decorative background icon */}
     <Icon
       size={120}
@@ -87,7 +87,7 @@ const StatCard = ({ label, val, icon: Icon }) => (
       </p>
     </div>
 
-    <div className="relative z-10 p-4 rounded-control shadow-inner bg-white text-primary-dark transition-all duration-500">
+    <div className="relative z-10 p-4 rounded-control mb-8 md:mb-0 shadow-inner bg-white text-primary-dark transition-all duration-500">
       <Icon size={32} strokeWidth={2.5} />
     </div>
   </div>

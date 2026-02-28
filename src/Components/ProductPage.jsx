@@ -33,7 +33,7 @@ const ProductPage = () => {
     return <ErrorState onBack={() => navigate("/dashboard/products")} />;
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-6 animate-in fade-in zoom-in-95 duration-700">
+    <div className="max-w-7xl mx-auto py-8 animate-in fade-in zoom-in-95 duration-700">
       {/* Navigation Header */}
       <header className="flex justify-between items-center mb-12 border-b border-surface-base pb-6">
         <button
@@ -47,7 +47,7 @@ const ProductPage = () => {
           </div>
           Exit Product View
         </button>
-        <div className="flex items-center gap-3 text-primary-accent  font-display font-black text-xs tracking-[0.2em]">
+        <div className="md:flex items-center gap-3 text-primary-accent  font-display font-black text-xs tracking-[0.2em] hidden">
           <ShieldAlertIcon size={14} /> ENCRYPTED_DATA // PID-00{product.id}
         </div>
       </header>
@@ -70,8 +70,8 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="relative z-10 pt-10 border-t border-white/10 flex items-center gap-6">
-            <div className="p-3 bg-white/5 rounded-inner border border-white/10">
+          <div className="relative z-10 pt-10 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="p-3 bg-white/5 rounded-inner border border-white/10 rounded-2xl">
               <Fingerprint size={28} className="text-primary-soft/60" />
             </div>
             <div>
@@ -117,7 +117,7 @@ const ProductPage = () => {
                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-soft/40 mb-2">
                   Category Assignment
                 </p>
-                <p className="text-5xl font-display font-black  uppercase tracking-tighter text-white">
+                <p className="text-3xl sm:text-4xl md:text-5xl font-display font-black  uppercase tracking-tighter text-white">
                   {product.category}
                 </p>
                 <p className="text-[10px] text-primary-soft/30 font-medium mt-6 leading-relaxed max-w-sm ">

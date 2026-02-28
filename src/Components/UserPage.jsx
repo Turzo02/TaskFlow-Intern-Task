@@ -22,7 +22,7 @@ const UserPage = () => {
   if (error || !user) return <ErrorState onBack={() => navigate('/dashboard/users')} />;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-10 animate-in fade-in zoom-in duration-700">
+    <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in zoom-in duration-700">
       <button 
         onClick={() => navigate('/dashboard/users')}
         className="group flex items-center gap-3  text-primary-dark transition-all font-black uppercase text-[10px] tracking-[0.3em] cursor-pointer"
@@ -56,7 +56,7 @@ const UserPage = () => {
         </div>
 
         {/* Technical Data Breakdown */}
-        <div className="p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8">
           <DataBlock 
             icon={Mail} 
             label="Digital Address" 
@@ -71,7 +71,7 @@ const UserPage = () => {
           {/* Access Status - Full Width Gradient Card */}
           <div className="md:col-span-2">
              <div className="flex items-center justify-between p-10 rounded-panel bg-action-gradient text-white border border-white/5 relative overflow-hidden group">
-                <div className="flex items-center gap-8 relative z-10">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-8 relative z-10">
                   <div className="p-5 rounded-control bg-white/10 backdrop-blur-md text-white border border-white/10 group-hover:scale-[0.9] transition-transform">
                     <ShieldCheck size={32} />
                   </div>
